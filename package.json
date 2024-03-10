@@ -1,11 +1,19 @@
 {
-  "name": "html-to-pdf",
+  "name": "@mbergal/html-to-pdf",
   "version": "0.0.0",
   "description": "Converts html to pdf using headless Chrome",
+  "homepage": "https://github.com/mbergal/html-to-pdf",
+  "repository": {
+    "url": "https://github.com/mbergal/html-to-pdf.git",
+    "type": "git"
+  },
+  "bin": "dist/index.js",
   "type": "module",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "dev": "tsx index.ts",
+    "build": "tsc --build",
+    "clean": "tsc --build --clean",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -15,8 +23,14 @@
     "@types/commander": "^2.12.2",
     "tsx": "^4.7.1"
   },
+  "authors": [
+    "Misha Bergal <misha.bergal@gmail.com>"
+  ],
   "dependencies": {
     "commander": "^12.0.0",
     "puppeteer": "^22.4.1"
+  },
+"engines": {
+    "node": ">=v20.11"
   }
 }
