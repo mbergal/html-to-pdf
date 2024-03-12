@@ -12,7 +12,7 @@ type ArrayElement<ArrayType extends readonly unknown[]> =
 const paperSizes = ['letter', 'legal', 'tabloid', 'ledger', 'a0', 'a1', 'a2', 'a3', 'a4', 'a5', 'a6'] as const;
 type PaperSize = ArrayElement<typeof paperSizes>
 
-async function printPDF(file_or_url: string, paperSize: PaperSize) {
+async function printPdf(file_or_url: string, paperSize: PaperSize) {
   const browser = await puppeteer.launch({ headless: true });
   const page = await browser.newPage();
   await page.goto(file_or_url, { waitUntil: 'networkidle0' });
@@ -34,12 +34,12 @@ function isValidHttpUrl(file_or_url: string) {
   return url.protocol === "http:" || url.protocol === "https:";
 }
 
-function file_url(file_or_url: string) {
+function fileUrl(file_or_url: string) {
   if (isValidHttpUrl(file_or_url))
     return file_or_url
   else {
     if (fs.existsSync(file_or_url))
-      return path.resolve(file_or_url)
+      return "file://" + path.resolve(file_or_url)
     else {
       process.stderr.write(`File "${file_or_url} does not exist.\n"`)
       process.exit(1)
@@ -58,10 +58,11 @@ async function main() {
   program.parse();
 
   const options = program.opts();
-  const uri = file_url(options["file"])
-  const pdf = await printPDF("file://" + options["file"], options["paperSize"])
+  const uri = fileUrl(options["file"])
+  const pdf = await printPdf(fileUrl(options["file"]), options["paperSize"])
   fs.writeFileSync(options["output"], pdf)
 
 }
+
 
 await main()

@@ -11,8 +11,9 @@
   "type": "module",
   "main": "dist/index.js",
   "scripts": {
+    "preinstall": "echo 'This will take some time to download headless version of Chrome...'",
     "dev": "tsx index.ts",
-    "build": "tsc --build",
+    "build": "tsc --build && chmod +x dist/index.js",
     "clean": "tsc --build --clean",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -30,7 +31,7 @@
     "commander": "^12.0.0",
     "puppeteer": "^22.4.1"
   },
-"engines": {
+  "engines": {
     "node": ">=v20.11"
   }
 }
